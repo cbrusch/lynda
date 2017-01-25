@@ -23,13 +23,21 @@
 		scene.add(camera) // add camera to scene
 
 		cube = new THREE.CubeGeometry(300, 300, 300); // create a 3D thing for the camera to scene. properties are (width, height, depth)
-		material = new THREE.MeshBasicMaterial({color: 0x0000FF, wireframe:false}); // each 3D thing needs a material in order to be visible. argument is an object that can include properties of ({ color, wireframe mode --- think rhino ---- })
+		material = new THREE.MeshLambertMaterial({color: 0x0000FF}); // each 3D thing needs a material in order to be visible. argument is an object that can include properties of ({ color, wireframe mode --- think rhino ---- })
 		mesh = new THREE.Mesh(cube, material); // combine object and material into a mesh object
 		scene.add(mesh); // add mesh to add thing to scene
-
 		console.log("my scene is set up");
 
-		// renderer = new THREE.CanvasRenderer(); // create render object
+		// var pointLight = new THREE.PointLight(0x0000FF); // create a light object with color property
+		// pointLight.position.x = 10; // set light's x, y and z positions
+		// pointLight.position.y = 50;
+		// pointLight.position.z = 1000;
+		// scene.add(pointLight); // add light to scene
+
+		var dLight = new THREE.DirectionalLight(0xFFFFFF);
+		dLight.position.set(0, 1, 0);
+		scene.add(dLight);
+
 		renderer = new THREE.WebGLRenderer({ antialias: true });
 		console.log("I'm creating the renderer");
 		renderer.setSize(window.innerWidth, window.innerHeight); // set visible size. these properties fill the browser window
