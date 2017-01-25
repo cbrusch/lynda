@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Three.js: Lynda Tutorial</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/app.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="js/three.min.js"></script>
+</head>
+<body>
+<!-- https://www.lynda.com/Flash-Professional-tutorials/Getting-started-threejs/97148/107052-4.html -->
+</body>
+<script>
+	var camera, scene, renderer, cube, material, mesh;
+
+	$(function() {
+		console.log("I'm initializing the page");
+		scene = new THREE.Scene // create new three.js scene object
+		camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 1, 10000); // every scene needs a camera object. properties are (field of view, aspect ratio, near clipping plane, far clipping plane)
+		camera.position.z = 1000; // position camera in 3D space
+		scene.add(camera) // add camera to scene
+
+		cube = new THREE.CubeGeometry(300, 300, 300); // create a 3D thing for the camera to scene. properties are (width, height, depth)
+		material = new THREE.MeshBasicMaterial({color: 0x0000FF, wireframe:false}); // each 3D thing needs a material in order to be visible. argument is an object that can include properties of ({ color, wireframe mode --- think rhino ---- })
+		mesh = new THREE.Mesh(cube, material); // combine object and material into a mesh object
+		scene.add(mesh); // add mesh to add thing to scene
+
+		console.log("my scene is set up");
+
+		// renderer = new THREE.CanvasRenderer(); // create render object
+		renderer = new THREE.WebGLRenderer({ antialias: true });
+		console.log("I'm creating the renderer");
+		renderer.setSize(window.innerWidth, window.innerHeight); // set visible size. these properties fill the browser window
+		console.log("I set the rendere size in the browser");
+
+		document.body.appendChild(renderer.domElement); // the renderer is what you'll see in the DOM, but must be added
+		console.log("I added the renderer to the DOM");
+
+		animate();
+		console.log("I called the animate function");
+	});
+
+	function animate() {
+		requestAnimationFrame(animate); // built-in function
+		mesh.rotation.x += 0.02; // move cube along x and y axes to see it in 3D
+		mesh.rotation.y += 0.02;
+
+		render();
+		console.log("I called the render function");
+	}
+
+	function render() {
+		renderer.render(scene, camera);  //render renderer object to make scene visible in the browser
+		console.log("I rendered the scene! You should see a cube now!");
+	}
+
+</script>
+</html>
